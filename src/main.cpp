@@ -63,7 +63,8 @@ ImGuiCocos::get().setup([] {
     ImGui::Checkbox("Safe Mode",&SafeMode);
     ImGui::Checkbox("Auto Safe Mode",&AutoSafeMode);
     ImGui::Checkbox("Auto Safe Mode",&AutoSafeMode);
-    ImGui::Checkbox("TESTCOLRO",&CustomWave);
+    ImGui::Checkbox("Hide Wave Trail",&NoWaveTail);
+    ImGui::Checkbox("Solid Wave Trail",&SolidWaveTrail);
     ImGui::End();
     return true;
 });

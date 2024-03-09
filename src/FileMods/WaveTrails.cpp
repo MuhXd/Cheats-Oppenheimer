@@ -13,11 +13,6 @@ struct $modify(PlayerObject) {
     }
     void activateStreak() { 
         if (m_fields->N_DartObject && NoWaveTail) return;
-          if (m_fields->N_DartObject && CustomWave) {
-            auto object = m_fields->m_waveTrail;  
-            ccColor3B myColor = {255, 0, 0};
-            object->setColor(myColor);
-        }
         PlayerObject::activateStreak();
     }
 };
