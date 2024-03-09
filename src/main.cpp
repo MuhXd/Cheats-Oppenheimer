@@ -14,6 +14,7 @@ bool ShowUi = true;
 bool doingThing = false;
 bool dragging = false;
 bool placedbtn = false;
+bool intUi = false;
 
 class FakeLayer : public CCLayer {
 public:
@@ -54,7 +55,10 @@ class $modify(MenuLayer) {
 bool init() {
         if (!MenuLayer::init())
             return false;
-
+    if (intUi) {
+        return true;
+    };
+    intUi = true;
     ImGuiCocos::get().setup([] {
     // this runs after imgui has been setup,
     // its a callback as imgui will be re initialized when toggling fullscreen,
@@ -75,9 +79,7 @@ bool init() {
     ImGui::End();
 });
 
-        if (getplat == "Android" || getplat == "IOS") {
             placeMobilehackmenu();
-        }
        
         return true;
     }
