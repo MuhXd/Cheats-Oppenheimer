@@ -8,11 +8,13 @@
 #include <Geode/modify/UILayer.hpp>
 #include "../funcs/globalbtns.hpp"
 #include "../funcs/AutoSafeMod.hpp"
-#include "Safemode.hpp"
 #include <Geode/modify/PlayerObject.hpp>
 
 using namespace geode::prelude;
 
+EndLevelLayer* HasUiUp = nullptr;
+UILayer* Ui = nullptr;
+bool Sm_Mod = true;
 
 
 class $modify(GJGameLevel) {
