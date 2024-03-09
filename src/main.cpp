@@ -14,6 +14,7 @@ bool ShowUi = true;
 bool doingThing = false;
 bool dragging = false;
 bool placedbtn = false;
+bool EnableButton = false;
 
 class FakeLayer : public CCLayer {
 public:
@@ -47,14 +48,16 @@ ImGuiCocos::get().setup([] {
         return true;
     }
     ImGui::Begin(fmt::format("Oppenheimer: {}", getver()).c_str());
-   // ImGui::Checkbox("Noclip",&Noclip);
+    ImGui::Checkbox("Noclip",&Noclip);
+    ImGui::Checkbox("Enable Mobile Ui",&EnableButton);
     if (!LoadedPos) {
         auto winSize = CCDirector::get()->getWinSize();
-       // ImGui::SetWindowSize({300,100});
-        // ImGui::SetWindowPos({winSize.width / 2,winSize.height});
+        ImGui::SetWindowSize({300,100});
+         ImGui::SetWindowPos({winSize.width / 2,winSize.height});
         LoadedPos=true;
     }
     ImGui::End();
+    return true;
 });
 #endif
 }
@@ -79,7 +82,7 @@ bool init() {
         if (!MenuLayer::init())
             return false;
         
-        if (getplat == "Android" || getplat == "IOS") {
+        if (getplat == "Android" || getplat == "IOS" || EnableButton) {
             placeMobilehackmenu();
         }
        
