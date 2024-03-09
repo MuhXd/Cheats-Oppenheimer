@@ -35,6 +35,7 @@ void placeMobilehackmenu() {
 }
 
 $on_mod(Loaded) {
+#ifndef NO_IMGUI
 ImGuiCocos::get().setup([] {
 
     // this runs after imgui has been setup,
@@ -55,6 +56,7 @@ ImGuiCocos::get().setup([] {
     }
     ImGui::End();
 });
+#endif
 }
 
 // setup keybinds
