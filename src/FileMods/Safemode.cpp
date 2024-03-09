@@ -12,9 +12,9 @@
 
 using namespace geode::prelude;
 
-EndLevelLayer* HasUiUp = nullptr;
-UILayer* Ui = nullptr;
-bool Sm_Mod = true;
+static EndLevelLayer* HasUiUp = nullptr;
+static UILayer* Ui = nullptr;
+static bool Sm_Mod = true;
 
 
 class $modify(GJGameLevel) {
