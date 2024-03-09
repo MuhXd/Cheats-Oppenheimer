@@ -35,7 +35,6 @@ void placeMobilehackmenu() {
 }
 
 $on_mod(Loaded) {
-
 ImGuiCocos::get().setup([] {
 
     // this runs after imgui has been setup,
@@ -69,14 +68,18 @@ bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool arr) {
 }
 };
 
+
+auto getplat = Platform().c_str();
 class $modify(MenuLayer) { 
 
 
 bool init() {
         if (!MenuLayer::init())
             return false;
-
-        placeMobilehackmenu();
+        
+        if (getplat == "Android" || getplat == "IOS") {
+            placeMobilehackmenu();
+        }
        
         return true;
     }
