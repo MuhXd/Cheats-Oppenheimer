@@ -1,5 +1,5 @@
+#pragma once
 extern bool ShowUi; // Enable Ui
-
 
 extern bool Noclip; // Noclip real
 extern bool SolidWaveTrail; // Noclip real
