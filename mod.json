@@ -12,8 +12,10 @@
 	"resources": {
 		"sprites": ["resources/*.png"],
 		"spritesheets": {
-			"MainSpread": [
-				"resources/Button/*.png"
+			"ButtonsSpread": [
+				"resources/Buttons/*.png"
+			],"EndScreenSheet": [
+				"resources/EndScreen/*.png"
 			]
 		}
 	},

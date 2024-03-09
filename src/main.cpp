@@ -11,10 +11,15 @@ using namespace geode::prelude;
 bool Noclip = false;
 bool LoadedPos = true;
 bool ShowUi = true;
+bool SafeMode = false;
+bool AutoSafeMode = false;
 bool doingThing = false;
+bool SolidWaveTrail = false; 
+bool NoWaveTail = false; 
 bool dragging = false;
 bool placedbtn = false;
 bool EnableButton = false;
+bool CustomWave = false;
 
 class FakeLayer : public CCLayer {
 public:
@@ -47,15 +52,18 @@ ImGuiCocos::get().setup([] {
     if (!ShowUi) {
         return true;
     }
-    ImGui::Begin(fmt::format("Oppenheimer: {}", getver()).c_str());
-    ImGui::Checkbox("Noclip",&Noclip);
-    ImGui::Checkbox("Enable Mobile Ui",&EnableButton);
     if (!LoadedPos) {
         auto winSize = CCDirector::get()->getWinSize();
         ImGui::SetWindowSize({300,100});
-         ImGui::SetWindowPos({winSize.width / 2,winSize.height});
+        ImGui::SetWindowPos({winSize.width / 2,winSize.height});
         LoadedPos=true;
     }
+    ImGui::Begin(fmt::format("Oppenheimer: {}", getver()).c_str());
+    ImGui::Checkbox("Noclip",&Noclip);
+    ImGui::Checkbox("Safe Mode",&SafeMode);
+    ImGui::Checkbox("Auto Safe Mode",&AutoSafeMode);
+    ImGui::Checkbox("Auto Safe Mode",&AutoSafeMode);
+    ImGui::Checkbox("TESTCOLRO",&CustomWave);
     ImGui::End();
     return true;
 });
@@ -74,7 +82,6 @@ bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool arr) {
 };
 
 
-auto getplat = Platform().c_str();
 class $modify(MenuLayer) { 
 
 
@@ -82,10 +89,14 @@ bool init() {
         if (!MenuLayer::init())
             return false;
         
-        if (getplat == "Android" || getplat == "IOS" || EnableButton) {
+            #ifndef GEODE_IS_DESKTOP
             placeMobilehackmenu();
-        }
-       
+            #else
+                 #ifndef GITHUB_ACTIONS
+                    placeMobilehackmenu();
+                #endif
+            #endif
+            
         return true;
     }
 

@@ -59,11 +59,11 @@ virtual bool ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event) {
 
             doingThing = false;
             dragging = false;
-
             if (space.x > 0 && space.y > 0)
             {
                 if (space.x < btn->getContentSize().width && space.y < btn->getContentSize().height)
                 {
+                    btn->stopAllActions();
                     btn->runAction(CCEaseInOut::create(CCScaleTo::create(0.1f, 0.8f), 2));
                     doingThing = true;
                 }
@@ -76,12 +76,12 @@ virtual bool ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event) {
 
             if (doingThing)
             {
-                if (!dragging)
-                    ShowUi=!ShowUi;
-
-                this->getChildByIDRecursive("MainFunction"_spr)->runAction(CCEaseBackOut::create(CCScaleTo::create(0.35f, 1)));
-
-                doingThing = false;
+                    this->getChildByIDRecursive("MainFunction"_spr)->stopAllActions();
+                    if (!dragging) {
+                        ShowUi=!ShowUi;
+                    };
+                    this->getChildByIDRecursive("MainFunction"_spr)->runAction(CCEaseBackOut::create(CCScaleTo::create(0.35f, 1)));
+                    doingThing = false;
                     Mod::get()->setSavedValue<float>("posX", position.x);
                     Mod::get()->setSavedValue<float>("posY", position.y);
             }
