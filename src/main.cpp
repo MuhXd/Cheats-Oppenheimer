@@ -34,28 +34,6 @@ void placeMobilehackmenu() {
     }
 }
 
-$on_mod(Loaded) {
-ImGuiCocos::get().setup([] {
-
-    // this runs after imgui has been setup,
-    // its a callback as imgui will be re initialized when toggling fullscreen,
-    // so use this to setup any themes and or fonts!
-    LoadedPos = false;
-}).draw([] {
-    if (!ShowUi) {
-        return true;
-    }
-    ImGui::Begin(fmt::format("Oppenheimer: {}", getver()).c_str());
-    ImGui::Checkbox("Noclip",&Noclip);
-    if (!LoadedPos) {
-        auto winSize = CCDirector::get()->getWinSize();
-        ImGui::SetWindowSize({300,100});
-        ImGui::SetWindowPos({winSize.width / 2,winSize.height});
-        LoadedPos=true;
-    }
-    ImGui::End();
-});
-}
 
 // setup keybinds
 class $modify(CCKeyboardDispatcher) {
@@ -76,7 +54,27 @@ class $modify(MenuLayer) {
 bool init() {
         if (!MenuLayer::init())
             return false;
-        
+
+    ImGuiCocos::get().setup([] {
+    // this runs after imgui has been setup,
+    // its a callback as imgui will be re initialized when toggling fullscreen,
+    // so use this to setup any themes and or fonts!
+    LoadedPos = false;
+        }).draw([] {
+             if (!ShowUi) {
+                 return true;
+            }
+        ImGui::Begin(fmt::format("Oppenheimer: {}", getver()).c_str());
+        ImGui::Checkbox("Noclip",&Noclip);
+            if (!LoadedPos) {
+                auto winSize = CCDirector::get()->getWinSize();
+                ImGui::SetWindowSize({300,100});
+                ImGui::SetWindowPos({winSize.width / 2,winSize.height});
+                LoadedPos=true;
+            }
+    ImGui::End();
+});
+
         if (getplat == "Android" || getplat == "IOS") {
             placeMobilehackmenu();
         }
