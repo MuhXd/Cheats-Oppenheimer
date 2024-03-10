@@ -31,6 +31,7 @@ public:
         ShowUi=!ShowUi;
     }
 };
+#ifndef GEODE_IS_MACOS 
 void placeMobilehackmenu() {
     if (!placedbtn) {
         placedbtn=true;
@@ -43,7 +44,7 @@ void placeMobilehackmenu() {
         SceneManager::get()->keepAcrossScenes(btnee);
     }
 }
-
+#endif
 $on_mod(Loaded) {
 #ifndef NO_IMGUI
 ImGuiCocos::get().setup([] {
@@ -103,13 +104,13 @@ class $modify(MenuLayer) {
 bool init() {
         if (!MenuLayer::init())
             return false;
-        
+        bool thingy = false;
             #ifndef GEODE_IS_DESKTOP // If not desktop then
-            placeMobilehackmenu();
-            #else
-                 #ifndef GITHUB_ACTIONS // If Built locally then
-                    placeMobilehackmenu();
-                #endif
+                thingy = true;
+                placeMobilehackmenu();
+            #endif
+            #ifndef GITHUB_ACTIONS // If Built locally then
+                if(!thingy) placeMobilehackmenu();
             #endif
             
         return true;
