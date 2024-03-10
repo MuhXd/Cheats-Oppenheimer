@@ -51,6 +51,7 @@ ImGuiCocos::get().setup([] {
     // this runs after imgui has been setup,
     // its a callback as imgui will be re initialized when toggling fullscreen,
     // so use this to setup any themes and or fonts!
+    beforeRunTimeThemeify();
     LoadedPos = false;
 }).draw([] {
     if (!ShowUi) {
