@@ -31,6 +31,7 @@ public:
         ShowUi=!ShowUi;
     }
 };
+
 #ifndef GEODE_IS_MACOS // If not mac then
         void placeMobilehackmenu() {
             if (!placedbtn) {
@@ -45,18 +46,6 @@ public:
             }
         }
 #endif
-/*void placeMobilehackmenu() {
-    if (!placedbtn) {
-        placedbtn=true;
-        auto winSize = CCDirector::get()->getWinSize();
-        auto btnee = Dragged::create(2, menu_selector(FakeLayer::OpenUi));
-        btnee->setID("Oppenheimer"_spr);
-        btnee->setPosition({0,0});
-        btnee->setZOrder(20002);
-        CCScene::get()->addChild(btnee);
-        SceneManager::get()->keepAcrossScenes(btnee);
-    }
-}*/
 
 $on_mod(Loaded) {
 #ifndef NO_IMGUI
@@ -65,6 +54,7 @@ ImGuiCocos::get().setup([] {
     // this runs after imgui has been setup,
     // its a callback as imgui will be re initialized when toggling fullscreen,
     // so use this to setup any themes and or fonts!
+    beforeRunTimeThemeify();
     LoadedPos = false;
 }).draw([] {
     if (!ShowUi) {
@@ -116,8 +106,9 @@ class $modify(MenuLayer) {
 bool init() {
         if (!MenuLayer::init())
             return false;
-            auto thingy = false;
-            #ifdef GEODE_IS_ANDROID // If not desktop then
+
+        bool thingy = false;
+            #ifndef GEODE_IS_DESKTOP // If not desktop then
                 thingy = true;
                 placeMobilehackmenu();
             #endif
