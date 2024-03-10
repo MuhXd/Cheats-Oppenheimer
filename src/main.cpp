@@ -56,7 +56,7 @@ ImGuiCocos::get().setup([] {
     if (!ShowUi) {
         return true;
     }
-    ImGui::ShowStyleEditor();
+    //ImGui::ShowStyleEditor();
     //ImVec4* colors = ImGui::GetStyle().Colors;
     if (!LoadedPos) {
         auto winSize = CCDirector::get()->getWinSize();
