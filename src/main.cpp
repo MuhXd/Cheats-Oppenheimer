@@ -33,7 +33,7 @@ public:
 };
 
 void placeMobilehackmenu() {
-#ifndef GEODE_IS_MACOS // If not mac then
+#if !defined(GEODE_IS_MACOS) || !defined(GITHUB_ACTIONS) // If not mac then
             if (!placedbtn) {
                 placedbtn=true;
                 auto winSize = CCDirector::get()->getWinSize();
