@@ -44,6 +44,8 @@ public:
         this->setScale(1.0f);
         this->setAnchorPoint({0, 0});
         this->isHovering = false;
+        this->setTouchPriority(-10000);
+        menu->setTouchPriority(-10000);
         this->setTouchEnabled(true);
         this->setMouseEnabled(true);
         return true;

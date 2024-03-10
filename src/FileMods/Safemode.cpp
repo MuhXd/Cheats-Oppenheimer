@@ -13,33 +13,27 @@
 using namespace geode::prelude;
 
 static EndLevelLayer* HasUiUp = nullptr;
-static UILayer* Ui = nullptr;
 static bool Sm_Mod = true;
+static bool HidePush = false;
 
 
 class $modify(GJGameLevel) {
-    bool init() {
-        if (!GJGameLevel::init())
-            return false;
-        return true;
-    };
     void savePercentage(int p0, bool p1, int p2, int p3, bool p4) {
-        if (!SafeMode && (!SafeModeMods(true) ) ) {
+        if (!SafeMode && (!SafeModeMods(true))) {
             GJGameLevel::savePercentage(p0, p1, p2, p3, p4);
         }
     }
 };
-void updatePractice(auto l) {
-if (!PlayLayer::get()) return;
-     // display practice mode buttons bugfix
-            if (auto menu = l->getChildByID("checkpoint-menu")) {
-                if (HasUiUp) {
-                    menu->setVisible(false);
-                }
-                else {
-                    menu->setVisible(PlayLayer::get()->m_isPracticeMode);
-                };
-            };
+static void updatePractice() {
+    if (!PlayLayer::get()) return;
+    if (PlayLayer::get()->m_uiLayer == nullptr) {
+        return;
+    }
+    // display practice mode buttons bugfix
+    if (auto menu = PlayLayer::get()->m_uiLayer->getChildByID("checkpoint-menu")) {
+        if (!menu) return;
+        if (HasUiUp || HidePush) menu->setVisible(false); else menu->setVisible(PlayLayer::get()->m_isPracticeMode);
+    };
 }
 
 
@@ -48,11 +42,10 @@ class $modify(UILayer) {
     bool init(GJBaseGameLayer* layer) {
         if (!UILayer::init(layer))
             return false;
-
+       
         // delay by a single frame
         geode::Loader::get()->queueInMainThread([this] {
-            Ui = this;
-            updatePractice(this);
+            updatePractice();
         });
 
         return true;
@@ -65,48 +58,65 @@ class $modify(PlayLayer) {
             PlayLayer::showNewBest(po, p1, p2 , p3 , p4 , p5);
           }
     };
-    void togglePracticeMode(bool enabled) {
-        PlayLayer::togglePracticeMode(enabled);
-    }
     void levelComplete() {
+        HidePush = true;
         if (SafeMode || (SafeModeMods(true)) ) {
-            PlayLayer::togglePracticeMode(true);
             Sm_Mod = true;
+            if (!PlayLayer::get()->m_isPracticeMode) {
+                PlayLayer::get()->m_isTestMode = true;
+            } 
         }
         else {
             Sm_Mod = false;
         }
+        geode::Loader::get()->queueInMainThread([this] {
+            if (PlayLayer::get()->m_uiLayer) {
+                updatePractice();
+            }
+        });
         PlayLayer::levelComplete();
     };
     void resetLevel() {
         HasUiUp = nullptr;
-          if (Ui) {
-            updatePractice(Ui);
-        }
+        HidePush = false;
+        geode::Loader::get()->queueInMainThread([this] {
+             if (PlayLayer::get()->m_uiLayer) {
+                updatePractice();
+             }
+         });
+        
         PlayLayer::resetLevel();
     }
 };
 class $modify(endLayer,EndLevelLayer){
 static void onModify(auto & self)
     {
-       (void) self.setHookPriority("EndLevelLayer::init", -9999);
+       (void) self.setHookPriority("EndLevelLayer::showLayer", -9999);
     };
     void onReplay(CCObject* Sender) {
         EndLevelLayer::onReplay(Sender);
         HasUiUp = nullptr;
-        if (Ui) {
-            updatePractice(Ui);
-        }
+        HidePush = false;
+        geode::Loader::get()->queueInMainThread([this] {
+            if (PlayLayer::get()->m_uiLayer) {
+             updatePractice();
+            }
+         });
+        
     }
     void showLayer(bool p0) {
  	    EndLevelLayer::showLayer(p0);
         HasUiUp = this;
+        geode::Loader::get()->queueInMainThread([this] {
+            if (PlayLayer::get()->m_uiLayer) {
+                updatePractice();
+            }
+        });
+        HidePush = false;
         if (!Sm_Mod) {
             return;
         }
-        if (Ui) {
-            updatePractice(Ui);
-        }
+        
         auto Layer = this->getChildByID("main-layer");
         if  (auto pract = Layer->getChildByID("practice-complete-text")) {
 			pract->setVisible(false);
@@ -121,6 +131,20 @@ static void onModify(auto & self)
             SafeMode->setID("Safe-complete-text"_spr);
             Layer->addChild(SafeMode);
             SafeMode->setPosition(pract->getPosition());
+		}
+         if  (auto levelcomp = Layer->getChildByID("level-complete-text")) {
+			levelcomp->setVisible(false);
+            CCSprite* SafeMode = nullptr;
+            if (SafeModeMods(false)) {
+                SafeMode = CCSprite::createWithSpriteFrameName("Bad_SafeMode.png"_spr);
+            }
+            else {
+                SafeMode = CCSprite::createWithSpriteFrameName("Good_SafeMode.png"_spr);
+            };
+
+            SafeMode->setID("Safe-complete-text"_spr);
+            Layer->addChild(SafeMode);
+            SafeMode->setPosition(levelcomp->getPosition());
 		}
         if (auto CompleteText = Layer->getChildByID("complete-message")) {
             CompleteText->setVisible(false);

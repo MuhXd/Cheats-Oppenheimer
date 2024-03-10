@@ -6,13 +6,11 @@ using namespace geode::prelude;
 using namespace geode::prelude;
 
 
-class $modify (NoclipLayer, PlayLayer)
-{
+class $modify (NoclipLayer, PlayLayer) {
     GameObject* disableCheat;
     bool m_noclip = Noclip;
 
-    void destroyPlayer(PlayerObject * p0, GameObject * p1)
-    {
+    void destroyPlayer(PlayerObject * p0, GameObject * p1) {
         if (!m_fields->disableCheat)
             m_fields->disableCheat = p1;
 

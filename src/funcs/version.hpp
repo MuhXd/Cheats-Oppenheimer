@@ -10,19 +10,20 @@ static std::string binfo() {
 };
 static std::string Platform() {
    #ifdef GEODE_IS_WINDOWS
-      return fmt::format("Windows");
+      return "Windows";
    #else 
       #ifdef GEODE_IS_ANDROID
-         return fmt::format("Android");
+         return "Android";
       #else
          #ifdef GEODE_IS_IOS
-            return fmt::format("IOS");
+            return "iOS";
          #endif
          #ifdef GEODE_IS_MACOS
-            return fmt::format("MAC-OS");
+            return "macOS";
          #endif
       #endif
    #endif
+   return "Unknown (maybe a samsung toaster idk)";
 };
 
 static std::string getver() {
