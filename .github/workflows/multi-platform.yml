@@ -17,7 +17,6 @@ jobs:
 
         - name: macOS
           os: macos-latest
-          build-args: "-Xclang -fno-validate-pch"
 
         - name: Android32
           os: ubuntu-latest
