@@ -18,6 +18,6 @@ style.Colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.39f, 0.96f, 0.34f, 0.51f);
 style.Colors[ImGuiCol_WindowBg] = ImVec4(0.00f, 0.18f, 0.00f, 0.94f);
 style.Colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.18f, 0.00f, 0.94f);
 #ifndef GEODE_IS_DESKTOP
-style.ScaleAllSizes(1.35f);
+style.ScaleAllSizes(1.1f);
 #endif
 }
