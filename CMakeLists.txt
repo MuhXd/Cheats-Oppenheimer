@@ -4,7 +4,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
-project(Oppenheimer VERSION 1.0.0)
+if(APPLE)
+    project(Oppenheimer VERSION 1.0.0 LANGUAGES OBJCXX CXX)
+else()
+    project(Oppenheimer VERSION 1.0.0)
+endif()
+
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 
