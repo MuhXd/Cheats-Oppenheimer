@@ -1,5 +1,5 @@
 #pragma once
-#ifndef GEODE_IS_MAC
+#ifndef GEODE_IS_MACOS
 #include "funcs/Draggedbtn.hpp"
 #endif
 
