@@ -102,13 +102,13 @@ class $modify(MenuLayer) {
 bool init() {
         if (!MenuLayer::init())
             return false;
-        
-            #ifndef GEODE_IS_DESKTOP // If not desktop then
-            placeMobilehackmenu();
-            #else
-                 #ifndef GITHUB_ACTIONS // If Built locally then
-                    placeMobilehackmenu();
-                #endif
+            auto thingy = false;
+            #ifdef GEODE_IS_ANDROID // If not desktop then
+                thingy = true;
+                placeMobilehackmenu();
+            #endif
+            #ifndef GITHUB_ACTIONS // If Built locally then
+                if(!thingy) placeMobilehackmenu();
             #endif
             
         return true;
