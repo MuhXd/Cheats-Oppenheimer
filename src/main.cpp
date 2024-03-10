@@ -31,7 +31,7 @@ public:
         ShowUi=!ShowUi;
     }
 };
-#ifndef GEODE_IS_MAC // If not mac then
+#ifndef GEODE_IS_MACOS // If not mac then
         void placeMobilehackmenu() {
             if (!placedbtn) {
                 placedbtn=true;
