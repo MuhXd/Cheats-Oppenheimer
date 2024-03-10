@@ -1,5 +1,7 @@
 #pragma once
+#ifndef GEODE_IS_MAC
 #include "funcs/Draggedbtn.hpp"
+#endif
 
 // Mods
 #include "FileMods/Noclip.cpp"
