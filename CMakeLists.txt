@@ -19,7 +19,7 @@ endif()
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
 if (NOT DEFINED ENV{NO_IMGUI})
-    CPMAddPackage("gh:coopeeo/gd-imgui-cocos#8e766df") # specify a commit!
+    CPMAddPackage("gh:coopeeo/gd-imgui-cocos#ab4cc31") # specify a commit!
     target_link_libraries(${PROJECT_NAME} imgui-cocos)
     message(STATUS "ADDING GD-IMGUI")
 endif()
