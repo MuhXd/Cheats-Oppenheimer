@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
 if(APPLE)
-    project(Oppenheimer VERSION 1.0.0 LANGUAGES OBJCXX CXX)
+    project(Oppenheimer VERSION 1.0.0 LANGUAGES CXX OBJCXX)
 else()
     project(Oppenheimer VERSION 1.0.0)
 endif()
