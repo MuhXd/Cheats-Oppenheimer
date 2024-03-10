@@ -31,7 +31,21 @@ public:
         ShowUi=!ShowUi;
     }
 };
-void placeMobilehackmenu() {
+#ifndef GEODE_IS_MAC // If not mac then
+        void placeMobilehackmenu() {
+            if (!placedbtn) {
+                placedbtn=true;
+                auto winSize = CCDirector::get()->getWinSize();
+                auto btnee = Dragged::create(2, menu_selector(FakeLayer::OpenUi));
+                btnee->setID("Oppenheimer"_spr);
+                btnee->setPosition({0,0});
+                btnee->setZOrder(20002);
+                CCScene::get()->addChild(btnee);
+                SceneManager::get()->keepAcrossScenes(btnee);
+            }
+        }
+#endif
+/*void placeMobilehackmenu() {
     if (!placedbtn) {
         placedbtn=true;
         auto winSize = CCDirector::get()->getWinSize();
@@ -42,7 +56,7 @@ void placeMobilehackmenu() {
         CCScene::get()->addChild(btnee);
         SceneManager::get()->keepAcrossScenes(btnee);
     }
-}
+}*/
 
 $on_mod(Loaded) {
 #ifndef NO_IMGUI
