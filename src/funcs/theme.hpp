@@ -10,7 +10,7 @@ static void beforeRunTimeThemeify() {
 #ifndef GEODE_IS_DESKTOP
 // Get the window size using CCDirector
 auto winSize = CCDirector::get()->getWinSize();
-float scaleFactor = winSize.width / 500.0f;  // use a screen size idk.
+float scaleFactor = winSize.width / 300.0f;  // use a screen size idk.
 ImGui::GetIO().FontGlobalScale = scaleFactor;
 ImGuiStyle& style = ImGui::GetStyle();
 style.ScaleAllSizes(scaleFactor);
