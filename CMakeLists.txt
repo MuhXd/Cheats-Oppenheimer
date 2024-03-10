@@ -24,5 +24,10 @@ if (NOT DEFINED ENV{NO_IMGUI})
     message(STATUS "ADDING GD-IMGUI")
 endif()
 
+if (DEFINED ENV{GITHUB_ACTIONS})
+    message("Github Actions Build")
+    add_definitions(-DGITHUB_ACTIONS)
+endif()
+
 
 setup_geode_mod(${PROJECT_NAME})

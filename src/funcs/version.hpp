@@ -3,7 +3,7 @@
 
 static std::string binfo() {
    #ifdef GITHUB_ACTIONS
-       return fmt::format("{})", Mod::get()->getVersion().toString());
+       return fmt::format("({})", Mod::get()->getVersion().toString());
    #else 
        return fmt::format("{}-TestBuild", Mod::get()->getVersion().toString());
    #endif
