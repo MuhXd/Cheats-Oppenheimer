@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
 if(APPLE)
-    project(Oppenheimer VERSION 1.0.0 LANGUAGES OBJCXX CXX)
+    project(Oppenheimer VERSION 1.0.0 LANGUAGES OBJCXX)
 else()
     project(Oppenheimer VERSION 1.0.0)
 endif()
@@ -24,7 +24,7 @@ endif()
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
 if (NOT DEFINED ENV{NO_IMGUI})
-    CPMAddPackage("gh:coopeeo/gd-imgui-cocos#6e9ff80") # specify a commit!
+    CPMAddPackage("gh:coopeeo/gd-imgui-cocos#1e1fe36") # specify a commit!
     target_link_libraries(${PROJECT_NAME} imgui-cocos)
     message(STATUS "ADDING GD-IMGUI")
 endif()
