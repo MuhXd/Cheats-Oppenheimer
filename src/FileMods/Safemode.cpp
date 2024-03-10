@@ -93,6 +93,7 @@ static void onModify(auto & self)
     {
        (void) self.setHookPriority("EndLevelLayer::showLayer", -9999);
     };
+       #ifndef GEODE_IS_MACOS
     void onReplay(CCObject* Sender) {
         EndLevelLayer::onReplay(Sender);
         HasUiUp = nullptr;
@@ -104,6 +105,7 @@ static void onModify(auto & self)
          });
         
     }
+    #endif
     void showLayer(bool p0) {
  	    EndLevelLayer::showLayer(p0);
         HasUiUp = this;
