@@ -32,8 +32,8 @@ public:
     }
 };
 
+void placeMobilehackmenu() {
 #ifndef GEODE_IS_MACOS // If not mac then
-        void placeMobilehackmenu() {
             if (!placedbtn) {
                 placedbtn=true;
                 auto winSize = CCDirector::get()->getWinSize();
@@ -44,8 +44,8 @@ public:
                 CCScene::get()->addChild(btnee);
                 SceneManager::get()->keepAcrossScenes(btnee);
             }
-        }
 #endif
+}
 
 $on_mod(Loaded) {
 #ifndef NO_IMGUI
@@ -101,21 +101,11 @@ bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool arr) {
 
 
 class $modify(MenuLayer) { 
-
-
-bool init() {
+    bool init() {
         if (!MenuLayer::init())
             return false;
-
-        bool thingy = false;
-            #ifndef GEODE_IS_DESKTOP // If not desktop then
-                thingy = true;
-                placeMobilehackmenu();
-            #endif
-            #ifndef GITHUB_ACTIONS // If Built locally then
-                if(!thingy) placeMobilehackmenu();
-            #endif
-            
+    
+        placeMobilehackmenu();
         return true;
     }
 
