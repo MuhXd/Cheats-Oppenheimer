@@ -1,3 +1,3 @@
 # Oppenheimer
 
-This is where she makes a mod.
+This is where i make bomb

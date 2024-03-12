@@ -10,3 +10,4 @@
 * Solid Wave Trail
 * No Wave Trail
 * Change Wave Trail Color
+* Startpos Switcher (not mac)
