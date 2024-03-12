@@ -1,3 +1,5 @@
+#ifndef GEODE_IS_MACOS
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/PlayLayer.hpp>
@@ -166,3 +168,5 @@ class $modify (StartPosObject)
         return true;
     }
 };
+
+#endif
