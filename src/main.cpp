@@ -115,6 +115,9 @@ ImGuiCocos::get().setup([] {
     #ifndef GEODE_IS_MACOS
     if (ImGui::Checkbox("Startpos Switcher",&StartposSwitcher)) {
         if (oldstart != StartposSwitcher) {
+            if (!PlayLayer::get()) {
+                return  true;
+            }
             if (auto ui = PlayLayer::get()->m_uiLayer->getChildByID("startpos-switcher"_spr)) {
                 ui->setVisible(StartposSwitcher);
             }

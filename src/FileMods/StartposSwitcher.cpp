@@ -59,8 +59,17 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
             // test
         };
 
-        if (!startPosObject && selectedStartpos != -1 || !StartposSwitcher)
+        if (!startPosObject && selectedStartpos != -1 || !StartposSwitcher) {
+            if (!StartposSwitcher && startPosObject) {
+                 PlayLayer::get()->setStartPosObject(nullptr);
+
+                 GameManager::get()->getPlayLayer()->resetLevel();
+
+
+                 GameManager::get()->getPlayLayer()->startMusic();
+            };
             return;
+        }
 
        
         PlayLayer::get()->setStartPosObject(startPosObject);
