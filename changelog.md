@@ -8,3 +8,7 @@
     * Solid Wave Trail
     * No Wave Trail
     * Change Wave Trail Color
+## v1.0.1
+* First Update
+* Features include
+    * Start Position switcher

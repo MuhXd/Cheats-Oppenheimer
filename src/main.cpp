@@ -20,7 +20,9 @@ bool NoWaveTail = false;
 bool dragging = false;
 bool placedbtn = false;
 bool EnableButton = false;
+bool oldstart = false;
 bool CustomWave = false;
+bool StartposSwitcher = false;
 ccColor3B color = {255, 0, 0}; // Create a ccColor3B object
 auto colorPointer = static_cast<ccColor3B>(color);
 float imgui_color[3] = {colorPointer.r / 255.0f, colorPointer.g / 255.0f, colorPointer.b / 255.0f};
@@ -47,8 +49,45 @@ void placeMobilehackmenu() {
 #endif
 }
 
+void SettingsStuff(bool Save) {
+    if (!Save) {
+        // Saving settings
+        Mod::get()->setSavedValue("StartposSwitcher", StartposSwitcher);
+        Mod::get()->setSavedValue("Noclip", Noclip);
+        Mod::get()->setSavedValue("SolidWaveTrail", SolidWaveTrail);
+        Mod::get()->setSavedValue("Safe-Mode", SafeMode);
+        Mod::get()->setSavedValue("Auto-Safe-Mode", AutoSafeMode);
+        Mod::get()->setSavedValue("CustomWaveTrail", CustomWave);
+        // Saving individual color components
+        Mod::get()->setSavedValue("WaveColorR", imgui_color[0]);
+        Mod::get()->setSavedValue("WaveColorG", imgui_color[1]);
+        Mod::get()->setSavedValue("WaveColorB", imgui_color[2]);
+    } else {
+        // Loading settings
+        StartposSwitcher = Mod::get()->getSavedValue<bool>("StartposSwitcher");
+        Noclip = Mod::get()->getSavedValue<bool>("Noclip");
+        SolidWaveTrail = Mod::get()->getSavedValue<bool>("SolidWaveTrail");
+        SafeMode = Mod::get()->getSavedValue<bool>("Safe-Mode");
+        AutoSafeMode = Mod::get()->getSavedValue<bool>("Auto-Safe-Mode");
+        CustomWave = Mod::get()->getSavedValue<bool>("CustomWaveTrail");
+        // Loading individual color components
+        float waveColorR = Mod::get()->getSavedValue<float>("WaveColorR");
+        float waveColorG = Mod::get()->getSavedValue<float>("WaveColorG");
+        float waveColorB = Mod::get()->getSavedValue<float>("WaveColorB");
+        color.r = static_cast<GLubyte>(waveColorR * 255.0f);
+        color.g = static_cast<GLubyte>(waveColorG * 255.0f);
+        color.b = static_cast<GLubyte>(waveColorB * 255.0f);
+    }
+}
+
+
+
+$on_mod(Unloaded) {
+SettingsStuff(false);
+}
 $on_mod(Loaded) {
 #ifndef NO_IMGUI
+SettingsStuff(true);
 ImGuiCocos::get().setup([] {
 
     // this runs after imgui has been setup,
@@ -73,6 +112,16 @@ ImGuiCocos::get().setup([] {
     ImGui::Checkbox("Noclip",&Noclip);
     ImGui::Checkbox("Safe Mode",&SafeMode);
     ImGui::Checkbox("Auto Safe Mode",&AutoSafeMode);
+    if (ImGui::Checkbox("Startpos Switcher",&StartposSwitcher)) {
+        if (oldstart != StartposSwitcher) {
+            if (GameManager::sharedState()->getPlayLayer() ) {
+            if (auto ui = PlayLayer::get()->m_uiLayer->getChildByID("startpos-switcher"_spr)) {
+                ui->setVisible(StartposSwitcher);
+            }
+            oldstart = StartposSwitcher;
+            }
+        };
+    };
     ImGui::Checkbox("Hide Wave Trail",&NoWaveTail);
     ImGui::Checkbox("Solid Wave Trail",&SolidWaveTrail);
     ImGui::Checkbox("Custom Wave Trail Color",&CustomWave);

@@ -61,9 +61,7 @@ class $modify(PlayLayer) {
         HidePush = true;
         if (SafeMode || (SafeModeMods(true)) ) {
             Sm_Mod = true;
-            if (!PlayLayer::get()->m_isPracticeMode) {
-                PlayLayer::get()->m_isTestMode = true;
-            } 
+            PlayLayer::get()->m_isTestMode = true;     
         }
         else {
             Sm_Mod = false;
@@ -90,7 +88,7 @@ class $modify(PlayLayer) {
 class $modify(endLayer,EndLevelLayer){
 static void onModify(auto & self)
     {
-       (void) self.setHookPriority("EndLevelLayer::showLayer", -9999);
+       (void) self.setHookPriority("EndLevelLayer::showLayer", -100);
     };
        #ifndef GEODE_IS_MACOS
     void onReplay(CCObject* Sender) {
