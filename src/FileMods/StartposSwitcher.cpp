@@ -1,5 +1,6 @@
 
 
+ #ifndef GEODE_IS_MACOS
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/PlayLayer.hpp>
@@ -47,7 +48,7 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
     if (actuallySwitch)
     {
         StartPosObject* startPosObject = selectedStartpos == -1 ? nullptr : startPos[selectedStartpos];
-        #ifndef GEODE_IS_MACOS
+       
         // No Bindings >:( ANDROID OR PC OR IOS OR SAMSUNG TOASTER
        #ifdef GEODE_IS_WINDOWS
             int* startPosCheckpoint = (int*)GameManager::get()->getPlayLayer() + 2949;
@@ -69,21 +70,6 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
         PlayLayer::get()->setStartPosObject(startPosObject);
         GameManager::get()->getPlayLayer()->resetLevel();
         GameManager::get()->getPlayLayer()->startMusic();
-        #endif
-
-        #ifdef GEODE_IS_MACOS
-        // Mac real
-        auto pl = PlayLayer::get();
-        pl->m_startPosCheckpoint = nullptr;
-        pl->m_startPos = startPosObject;
-        if (startPosObject) {
-            pl->m_playerStartPosition = startPosObject->getPosition();
-        }
-        else {
-            pl->m_playerStartPosition = ccp(0, 105);
-        }
-        pl->resetLevel();
-        #endif
     }
     label->setString(fmt::format("{} / {}",selectedStartpos + 1,startPos.size()).c_str() );
 }
@@ -186,3 +172,4 @@ class $modify (StartPosObject)
         return true;
     }
 };
+#endif

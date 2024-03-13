@@ -12,4 +12,5 @@ using namespace geode::prelude;
 #include "FileMods/SolidWaveTrail.cpp"
 #include "FileMods/WaveTrails.cpp"
 #include "FileMods/StartposSwitcher.cpp"
+#include "FileMods/StartposSwitcher_Mac.cpp"
 
