@@ -112,7 +112,6 @@ ImGuiCocos::get().setup([] {
     ImGui::Checkbox("Noclip",&Noclip);
     ImGui::Checkbox("Safe Mode",&SafeMode);
     ImGui::Checkbox("Auto Safe Mode",&AutoSafeMode);
-    #ifndef GEODE_IS_MACOS
     if (ImGui::Checkbox("Startpos Switcher",&StartposSwitcher)) {
         if (oldstart != StartposSwitcher) {
             if (!PlayLayer::get()) {
@@ -124,9 +123,9 @@ ImGuiCocos::get().setup([] {
             oldstart = StartposSwitcher;
         };
     };
-    #endif
     ImGui::Checkbox("Hide Wave Trail",&NoWaveTail);
     ImGui::Checkbox("Solid Wave Trail",&SolidWaveTrail);
+    ImGui::Checkbox("No Wave Pulse",&NoWaveTrail);
     ImGui::Checkbox("Custom Wave Trail Color",&CustomWave);
    if (ImGui::ColorEdit3("Color", imgui_color)) {
         // If the color is edited, update the ccColor3B object

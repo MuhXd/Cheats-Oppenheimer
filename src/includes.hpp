@@ -11,6 +11,5 @@ using namespace geode::prelude;
 #include "FileMods/Safemode.cpp"
 #include "FileMods/SolidWaveTrail.cpp"
 #include "FileMods/WaveTrails.cpp"
-// Not on Macos
 #include "FileMods/StartposSwitcher.cpp"
 

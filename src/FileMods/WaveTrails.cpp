@@ -20,4 +20,10 @@ struct $modify(PlayerObject) {
     }
 };
 
+class $modify(HardStreak) {
+	void updateStroke(float f) {
+		if (NoWaveTrail) m_pulseSize = 1;
+		HardStreak::updateStroke(f);
+	}
+};
 

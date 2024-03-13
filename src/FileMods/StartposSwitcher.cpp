@@ -1,4 +1,4 @@
-#ifndef GEODE_IS_MACOS
+
 
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
@@ -36,7 +36,6 @@ static void FadeObjectOut(auto spr,int to, int time, bool StopAllActions = false
 }
 static void ActivateStartPos(int incBy, bool actuallySwitch = true)
 {
-     
     selectedStartpos += incBy;
 
     if (selectedStartpos < -1)
@@ -48,19 +47,16 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
     if (actuallySwitch)
     {
         StartPosObject* startPosObject = selectedStartpos == -1 ? nullptr : startPos[selectedStartpos];
-        // No Bindings >:( 
+        #ifndef GEODE_IS_MACOS
+        // No Bindings >:( ANDROID OR PC OR IOS OR SAMSUNG TOASTER
        #ifdef GEODE_IS_WINDOWS
             int* startPosCheckpoint = (int*)GameManager::get()->getPlayLayer() + 2949;
             *startPosCheckpoint = 0;
         #else
             GameManager::get()->getPlayLayer()->removeAllCheckpoints();
         #endif
-        if (PlayLayer::get()->m_isPracticeMode) {
-            // test
-        };
-
-        if (!startPosObject && selectedStartpos != -1 || !StartposSwitcher) {
-            if (!StartposSwitcher && startPosObject) {
+        if (!startPosObject && selectedStartpos != -1 || !StartposSwitcher  ) {
+            if (!StartposSwitcher && startPosObject )  {
                  PlayLayer::get()->setStartPosObject(nullptr);
 
                  GameManager::get()->getPlayLayer()->resetLevel();
@@ -70,14 +66,23 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
             };
             return;
         }
-
-       
         PlayLayer::get()->setStartPosObject(startPosObject);
-
         GameManager::get()->getPlayLayer()->resetLevel();
-
-
         GameManager::get()->getPlayLayer()->startMusic();
+        #endif
+
+        #ifdef GEODE_IS_MACOS
+        // Mac real
+        auto pl = PlayLayer::get();
+        pl->m_startPos = startPosObject;
+        if (startPosObject) {
+            pl->m_playerStartPosition = startPosObject->getPosition();
+        }
+        else {
+            pl->m_playerStartPosition = ccp(0, 105);
+        }
+        pl->resetLevel();
+        #endif
     }
     label->setString(fmt::format("{} / {}",selectedStartpos + 1,startPos.size()).c_str() );
 }
@@ -87,6 +92,9 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
 class StartPosStuff : public CCLayer {
 public:
     void Switch(CCObject* sender) {
+        if (HasUiUp) {
+            return;
+        }
         ActivateStartPos(sender->getTag());
     }
 };
@@ -163,7 +171,7 @@ class $modify (UILayer)
         return true;
     }
 };
-
+#ifndef GEODE_IS_MACOS
 class $modify (StartPosObject)
 {
     virtual bool init()
@@ -177,5 +185,18 @@ class $modify (StartPosObject)
         return true;
     }
 };
+#endif
 
+#ifdef GEODE_IS_MACOS
+class $modify(SPPlayLayer, PlayLayer) {
+    void addObject(GameObject* g) {
+		PlayLayer::addObject(g);
+		if (g->m_objectID == 31) {
+            g->retain();
+            startPos.push_back(static_cast<StartPosObject*>(this));
+            selectedStartpos = -1;
+
+            return;
+        }
+	}
 #endif

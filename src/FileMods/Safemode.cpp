@@ -11,7 +11,7 @@
 
 using namespace geode::prelude;
 
-static EndLevelLayer* HasUiUp = nullptr;
+
 static bool Sm_Mod = true;
 static bool HidePush = false;
 
