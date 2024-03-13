@@ -74,6 +74,7 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
         #ifdef GEODE_IS_MACOS
         // Mac real
         auto pl = PlayLayer::get();
+        pl->m_startPosCheckpoint = nullptr;
         pl->m_startPos = startPosObject;
         if (startPosObject) {
             pl->m_playerStartPosition = startPosObject->getPosition();
@@ -171,7 +172,7 @@ class $modify (UILayer)
         return true;
     }
 };
-#ifndef GEODE_IS_MACOS
+
 class $modify (StartPosObject)
 {
     virtual bool init()
@@ -185,18 +186,3 @@ class $modify (StartPosObject)
         return true;
     }
 };
-#endif
-
-#ifdef GEODE_IS_MACOS
-class $modify(SPPlayLayer, PlayLayer) {
-    void addObject(GameObject* g) {
-		PlayLayer::addObject(g);
-		if (g->m_objectID == 31) {
-            g->retain();
-            startPos.push_back(static_cast<StartPosObject*>(this));
-            selectedStartpos = -1;
-
-            return;
-        }
-	}
-#endif

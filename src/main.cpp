@@ -20,6 +20,7 @@ bool NoWaveTail = false;
 bool dragging = false;
 bool placedbtn = false;
 bool EnableButton = false;
+bool NoWaveTrail = false;
 bool oldstart = false;
 bool CustomWave = false;
 bool StartposSwitcher = false;
@@ -125,7 +126,7 @@ ImGuiCocos::get().setup([] {
     };
     ImGui::Checkbox("Hide Wave Trail",&NoWaveTail);
     ImGui::Checkbox("Solid Wave Trail",&SolidWaveTrail);
-    ImGui::Checkbox("No Wave Pulse",&NoWaveTrail);
+  //  ImGui::Checkbox("No Wave Pulse",&NoWaveTrail);
     ImGui::Checkbox("Custom Wave Trail Color",&CustomWave);
    if (ImGui::ColorEdit3("Color", imgui_color)) {
         // If the color is edited, update the ccColor3B object

@@ -1,10 +1,12 @@
+#pragma once 
 #include <Geode/Geode.hpp>
 using namespace geode::prelude;
 #include "../funcs/globalbtns.hpp"
 #include <Geode/modify/PlayerObject.hpp>
 
 
-struct $modify(PlayerObject) {
+
+class $modify(PlayerObject) {
     bool N_DartObject;
 
     void toggleDartMode(bool p0, bool p1) {
@@ -19,11 +21,3 @@ struct $modify(PlayerObject) {
         PlayerObject::activateStreak();
     }
 };
-
-class $modify(HardStreak) {
-	void updateStroke(float f) {
-		if (NoWaveTrail) m_pulseSize = 1;
-		HardStreak::updateStroke(f);
-	}
-};
-
