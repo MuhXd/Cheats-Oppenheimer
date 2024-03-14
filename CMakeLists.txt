@@ -33,6 +33,8 @@ if (DEFINED ENV{GITHUB_ACTIONS})
     message("Github Actions Build")
     add_definitions(-DGITHUB_ACTIONS)
 endif()
-
+message("Adding UiBuilder")
+CPMAddPackage("gh:MuhXd/uibuilder_Docs#main")
+target_link_libraries(${PROJECT_NAME} UIBuilder)
 
 setup_geode_mod(${PROJECT_NAME})

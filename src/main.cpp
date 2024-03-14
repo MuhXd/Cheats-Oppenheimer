@@ -124,6 +124,7 @@ ImGuiCocos::get().setup([] {
             oldstart = StartposSwitcher;
         };
     };
+
     ImGui::Checkbox("Hide Wave Trail",&NoWaveTail);
     ImGui::Checkbox("Solid Wave Trail",&SolidWaveTrail);
   //  ImGui::Checkbox("No Wave Pulse",&NoWaveTrail);

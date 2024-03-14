@@ -1,6 +1,5 @@
 
 
- #ifndef GEODE_IS_MACOS
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/PlayLayer.hpp>
@@ -48,7 +47,7 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
     if (actuallySwitch)
     {
         StartPosObject* startPosObject = selectedStartpos == -1 ? nullptr : startPos[selectedStartpos];
-       
+        #ifndef GEODE_IS_MACOS
         // No Bindings >:( ANDROID OR PC OR IOS OR SAMSUNG TOASTER
        #ifdef GEODE_IS_WINDOWS
             int* startPosCheckpoint = (int*)GameManager::get()->getPlayLayer() + 2949;
@@ -56,20 +55,31 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
         #else
             GameManager::get()->getPlayLayer()->removeAllCheckpoints();
         #endif
+        #endif
         if (!startPosObject && selectedStartpos != -1 || !StartposSwitcher  ) {
             if (!StartposSwitcher && startPosObject )  {
+                 #ifdef GEODE_IS_MACOS
+                    PauseLayer::get()->onRestartFull();
+                 #endif
+                  #ifndef GEODE_IS_MACOS
                  PlayLayer::get()->setStartPosObject(nullptr);
 
                  GameManager::get()->getPlayLayer()->resetLevel();
 
 
                  GameManager::get()->getPlayLayer()->startMusic();
+                 #endif
             };
             return;
         }
         PlayLayer::get()->setStartPosObject(startPosObject);
-        GameManager::get()->getPlayLayer()->resetLevel();
-        GameManager::get()->getPlayLayer()->startMusic();
+        #ifdef GEODE_IS_MACOS
+            PauseLayer::get()->onRestartFull();
+        #endif
+        #ifndef GEODE_IS_MACOS
+            GameManager::get()->getPlayLayer()->resetLevel();
+            GameManager::get()->getPlayLayer()->startMusic();
+        #endif
     }
     label->setString(fmt::format("{} / {}",selectedStartpos + 1,startPos.size()).c_str() );
 }
@@ -172,4 +182,3 @@ class $modify (StartPosObject)
         return true;
     }
 };
-#endif
