@@ -4,7 +4,7 @@ using namespace geode::prelude;
 
 #ifndef GEODE_IS_MACOS
 #include "funcs/Draggedbtn.hpp"
-#endif
+#endif // mac hates us
 
 // Mods
 #include "FileMods/Noclip.cpp"
