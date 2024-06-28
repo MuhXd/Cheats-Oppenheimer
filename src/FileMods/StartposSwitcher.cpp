@@ -47,39 +47,23 @@ static void ActivateStartPos(int incBy, bool actuallySwitch = true)
     if (actuallySwitch)
     {
         StartPosObject* startPosObject = selectedStartpos == -1 ? nullptr : startPos[selectedStartpos];
-        #ifndef GEODE_IS_MACOS
-        // No Bindings >:( ANDROID OR PC OR IOS OR SAMSUNG TOASTER
-       #ifdef GEODE_IS_WINDOWS
-            int* startPosCheckpoint = (int*)GameManager::get()->getPlayLayer() + 2949;
-            *startPosCheckpoint = 0;
-        #else
-            GameManager::get()->getPlayLayer()->removeAllCheckpoints();
-        #endif
-        #endif
+        GameManager::get()->getPlayLayer()->removeAllCheckpoints();
+
         if (!startPosObject && selectedStartpos != -1 || !StartposSwitcher  ) {
             if (!StartposSwitcher && startPosObject )  {
-                 #ifdef GEODE_IS_MACOS
-                    PauseLayer::get()->onRestartFull();
-                 #endif
-                  #ifndef GEODE_IS_MACOS
+                PauseLayer::get()->onRestartFull();
                  PlayLayer::get()->setStartPosObject(nullptr);
 
                  GameManager::get()->getPlayLayer()->resetLevel();
 
 
                  GameManager::get()->getPlayLayer()->startMusic();
-                 #endif
             };
             return;
         }
         PlayLayer::get()->setStartPosObject(startPosObject);
-        #ifdef GEODE_IS_MACOS
-            PauseLayer::get()->onRestartFull();
-        #endif
-        #ifndef GEODE_IS_MACOS
-            GameManager::get()->getPlayLayer()->resetLevel();
-            GameManager::get()->getPlayLayer()->startMusic();
-        #endif
+        PauseLayer::get()->onRestartFull();
+      
     }
     label->setString(fmt::format("{} / {}",selectedStartpos + 1,startPos.size()).c_str() );
 }
